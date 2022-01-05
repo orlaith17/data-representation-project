@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<!--Author: OH for WAD End of Year Project-->
+<html lang="en">
+<head>
+	<title>Login</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta charset="UTF-8">
+
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	
+	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+	
+<style>
+
+	/* Text in body defaults to san-serif fonts */	
+	body {font-family: Arial, Helvetica, sans-serif;}
+	
+	/* padding and border are included in the width and height */	
+	* {box-sizing: border-box;}
+	
+	/* Styling text alignment for divs */
+	.right {		
+		text-align: right;}
+	
+	/* align text left in login box */
+	.left {		
+		text-align: left;}
+		
+		
+
+	
+	/* style colour of text for header 2 and paragraph to a brown colour */
+	h2 {
+		color: #3d310b;}
+
+	p {
+		color: #3d310b;}
+		
+
+	/* Styling for position and sizing for smaller homepage logo, aligned left  */
+	div.b {
+		text-align: left;
+		float: left; } 
+		
+		
+		
+
+
+
+
+	/* Styling for Pop-up Login:  */	
+	
+	/* Button used to open the contact form - fixed at the bottom of the page */
+	.open-button {
+		cursor: pointer;
+		position: relative;}
+
+	/* The popup form - hidden by default, fixed at bottom with a thick grey border, sits atop other elements */
+	.form-popup {
+		display: none;
+		position: fixed;
+		bottom: 0;
+		left: 50px;
+		border: 10px solid #f1f1f1;
+		z-index: 9;}
+
+	/* Add styles to the form container */
+	.form-container {
+		max-width: 500px;
+		padding: 10px;
+		background-color: white;}
+
+	/* Full-width input fields for name and email */
+	.form-container input[type=text], .form-container input[type=email] {
+		width: 100%;
+		padding: 15px;
+		margin: 5px 0 22px 0;
+		border: none;
+		background: #f1f1f1;}
+
+	/* When the inputs are clicked into they turn a darker grey */
+	.form-container input[type=text]:focus, .form-container input[type=email]:focus {
+		background-color: #ddd;
+		outline: none;}
+
+	/* Set a style for the submit/login button */
+	.form-container .btn {
+		background-color: #f6bf1a;
+		color: white;
+		padding: 16px 20px;
+		border: none;
+		cursor: pointer;
+		width: 100%;
+		margin-bottom:10px;
+		opacity: 0.8;	}
+
+	/* Add a brown background color to the cancel button */
+	.form-container .cancel {
+		background-color: #594509;}
+
+	/* Add some hover effects to buttons */
+	.form-container .btn:hover, .open-button:hover {
+		opacity: 1;}
+
+
+
+
+
+
+
+
+	/* Styling for the chart */
+	.axis path,
+	.axis line {
+	  fill: none;
+	  stroke: #000;
+	  shape-rendering: crispEdges;}
+
+	.bar {
+	  fill: #61b3f2;}
+
+	.bar:hover {
+	  fill: #536cb4 ;}
+
+	.x.axis path {
+	  display: none;}
+
+	.d3-tip {
+	  line-height: 1;
+	  font-weight: bold;
+	  padding: 12px;
+	  background: rgba(0, 0, 0, 0.8);
+	  color: #fff;
+	  border-radius: 2px;}
+
+	/* Creates a small triangle extender for the tooltip */
+	.d3-tip:after {
+	  box-sizing: border-box;
+	  display: inline;
+	  font-size: 10px;
+	  width: 100%;
+	  line-height: 1;
+	  color: rgba(0, 0, 0, 0.8);
+	  content: "\25BC";
+	  position: absolute;
+	  text-align: center;}
+
+	/* Style northward tooltips differently */
+	.d3-tip.n:after {
+	  margin: -1px 0 0 0;
+	  top: 100%;
+	  left: 0;	}
+		
+		
+</style>
+
+</head>
+
+
+<!-- Background Colour yellow -->
+<body bgcolor="#f6bf1a">
+	
+	<!-- Menu - Navigation Bar, see details in Homepage-->
+
+	<div class="right" >
+	
+			<!-- Align homepage logo left in div -->
+			<div class="b" >
+				<a href="HomePage.html">
+					<img src="img/header.png" alt="Home link" title="Home" width="30%" >
+				</a>
+				</div>
+		
+		<a href="about.html">
+			<img src="img/buttonImages/about.png" alt="About link" title="About" width="15%">
+		</a>		
+        
+		<a href="specialOffers.html">
+			<img src="img/buttonImages/specialOffers.png" alt="Special Offers link" title="Special Offers" width="15%">
+		</a>
+	
+		
+		<img src="img/buttonImages/membersPortal.png" class="open-button" onclick="openForm()" alt="Member Portal link" title="Member Portal" width="15%">
+		   
+		<div class="form-popup" id="myForm">
+		
+			<form action="membersPortal.html" class="form-container">
+				
+				<div class="left">
+					<h1>Login</h1>
+
+					<label for="name"><b>Member Name</b></label>
+					<input type="text" placeholder="Enter Name" name="name" required>
+					
+					<label for="email"><b>Member Email</b></label>
+					<input type="email" placeholder="Enter Email" name="email" required>
+					
+
+					<button type="submit" class="btn">Login</button>
+					<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+				</div>
+					
+			</form>
+		</div>
+
+	</div>
+
+
+
+	<!-- Start of columns, move column a little bit down page for space -->
+	<div style = "position:relative; left:0px; top:50px;">
+		<!-- input box to check name and return a welcome message -->
+		<input id="in1">
+		<button onclick="myName()">Check name</button>
+		<h2 id="result"></h1>		
+		<p>
+		Number of Classes this Week: 
+		</p>
+		
+	</div>
+
+
+
+</body>
+
+
+<script>
+// functions to open and close the Members Portal form (see Homepage)
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+// function when called to return a welcome message	
+function myName() {
+	var y = document.getElementById("in1").value; 
+	document.getElementById("result").innerHTML = "Welcome to the Members Portal, " + y; 
+}
+
+// chart script, ref https://bl.ocks.org/mbostock/3885304
+var margin = {top: 40, right: 20, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var formatPercent = d3.format("");
+
+var x = d3.scale.ordinal()
+    .rangeRoundBands([0, width], .1);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .tickFormat(formatPercent);
+
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Number of Classes:</strong> <span style='color:red'>" + d.frequency + "</span>";
+  })
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+svg.call(tip);
+
+// The new data variable.
+var data = [
+  {letter: "Monday", frequency: 3},
+  {letter: "Tuesday", frequency: 2},
+  {letter: "Wednesday", frequency: 3},
+  {letter: "Thursday", frequency: 4},
+  {letter: "Friday", frequency: 2},
+  {letter: "Saturday", frequency: 5},
+  {letter: "Sunday", frequency: 2}
+  
+];
+
+// The following code was contained in the callback function.
+x.domain(data.map(function(d) { return d.letter; }));
+y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+
+svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis);
+
+svg.append("g")
+    .attr("class", "y axis")
+    .call(yAxis)
+  .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 6)
+    .attr("dy", ".71em")
+    .style("text-anchor", "end")
+    .text("Number of Classes");
+
+svg.selectAll(".bar")
+    .data(data)
+  .enter().append("rect")
+    .attr("class", "bar")
+    .attr("x", function(d) { return x(d.letter); })
+    .attr("width", x.rangeBand())
+    .attr("y", function(d) { return y(d.frequency); })
+    .attr("height", function(d) { return height - y(d.frequency); })
+    .on('mouseover', tip.show)
+    .on('mouseout', tip.hide)
+
+function type(d) {
+  d.frequency = +d.frequency;
+  return d;
+}
+
+</script>
+
+
+
+
+</html>
+
+

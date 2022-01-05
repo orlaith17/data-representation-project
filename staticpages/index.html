@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<!--Author: OH for WAD End of Year Project-->
+<html lang="en">
+<head>
+	<title>Index</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta charset="UTF-8">
+
+<style>
+	
+	/* Text in body defaults to san-serif fonts */	
+	body {font-family: Arial, Helvetica, sans-serif;}
+	
+
+	/* padding and border are included in the width and height */
+	* {box-sizing: border-box;}
+	
+	/* Styling text alignment for divs */	
+	.right {		
+		text-align: right;}
+	
+	.left {		
+		text-align: left;}
+	
+
+
+
+	/* Styling for Pop-up Login:  */	
+	
+	/* Button used to open the contact form - fixed at the bottom of the page */
+	.open-button {
+		cursor: pointer;
+		position: relative;}
+
+	/* The popup form - hidden by default, fixed at bottom with a thick grey border, sits atop other elements */
+	.form-popup {
+		display: none;
+		position: fixed;
+		bottom: 0;
+		left: 50px;
+		border: 10px solid #f1f1f1;
+		z-index: 9;}
+
+	/* Add styles to the form container */
+	.form-container {
+		max-width: 500px;
+		padding: 10px;
+		background-color: white;}
+
+	/* Full-width input fields for name and email */
+	.form-container input[type=text], .form-container input[type=email] {
+		width: 100%;
+		padding: 15px;
+		margin: 5px 0 22px 0;
+		border: none;
+		background: #f1f1f1;}
+
+	/* When the inputs are clicked into they turn a darker grey */
+	.form-container input[type=text]:focus, .form-container input[type=email]:focus {
+		background-color: #ddd;
+		outline: none;}
+
+	/* Set a style for the submit/login button */
+	.form-container .btn {
+		background-color: #f6bf1a;
+		color: white;
+		padding: 16px 20px;
+		border: none;
+		cursor: pointer;
+		width: 100%;
+		margin-bottom:10px;
+		opacity: 0.8;	}
+
+	/* Add a brown background color to the cancel button */
+	.form-container .cancel {
+		background-color: #594509;}
+
+	/* Add some hover effects to buttons */
+	.form-container .btn:hover, .open-button:hover {
+		opacity: 1;}
+	
+	
+</style>
+	
+</head>
+
+<!-- Background Colour yellow -->
+<body bgcolor="#f6bf1a">
+	
+	<!-- Big Front Page logo, ref png from img file -->
+	<div class="left">
+		<a href="index.html">
+			<img src="img/header.png" alt="Home link" title="Home" width="100%">
+		</a>
+	</div>
+	
+	<!-- Menu - Navigation Bar -->	
+	<div class="right">
+		
+		<!-- About button link to About, ref png from img file -->
+		<a href="about.html">
+			<img src="img/buttonImages/about.png" alt="About link" title="About" width="15%">
+		</a>
+		
+		<!-- Special Offers button linked to Special Offers page, ref png from img file -->
+		<a href="specialOffers.html">
+			<img src="img/buttonImages/specialOffers.png" alt="Special Offers link" title="Special Offers" width="15%">
+		</a>
+		
+		<!-- On clicking Members Portal (png button), a login form opens up in which a valid name (text) and email (email) must be entered. Once validated, it will redirect to Members Portal page -->
+		<img src="img/buttonImages/membersPortal.png" class="open-button" onclick="openForm()" alt="Members Portal link" title="Members Portal" width="15%">
+		   
+		<div class="form-popup" id="myForm">
+		
+			<form action="membersPortal.html" class="form-container">
+				<!-- text align left -->
+				<div class="left">
+					<h1>Login</h1>
+					<!-- labels for input types -->
+					<label for="name"><b>Member Name</b></label>
+					<input type="text" placeholder="Enter Name" name="name" required>
+					
+					<label for="email"><b>Member Email</b></label>
+					<input type="email" placeholder="Enter Email" name="email" required>
+					
+					<!-- followed by login or cancel buttons -->
+					<button type="submit" class="btn">Login</button>
+					<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+				</div>
+					
+			</form>
+		</div>
+		
+		<!-- Text below Menu Bar -->
+		<p>
+			<img src="img/homeText.png" title="Home" width="46.5%">
+		</p>
+
+	</div>
+	
+ </body>
+
+<script>
+// function to open the Members Portal form using id = myForm on the login button
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+// function to close the Members Portal form using id = myForm on the cancel button
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+	
+</script>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
