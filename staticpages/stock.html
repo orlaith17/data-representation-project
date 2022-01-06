@@ -23,6 +23,7 @@
   </head>
 
     <body>
+        <!--//navbar-->
         <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
@@ -56,7 +57,7 @@
         </div>
 
 
-
+<!--//jumbotron-->
 <div class="container">  
   
     <div class="jumbotron">
@@ -73,8 +74,31 @@
 
 </div>  
 
+<!--//link to on update table-->
+<div class ="container" id="create-update" style="display:none">
+  <h2>create-update</h2>
+            <table id ="createUpdateForm">
+                <tr>
+                    <td>Item</td>
+                    <td><input type="text" name="Item"></td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td><input type="text" name="Description"></td>     
+                </tr>
+                <tr>           
+                    <td>Price</td>
+                    <td><input type="text" name="Price"></td> 
+                </tr>
+                
+                <tr>
+                    <td></td><td><button id="create-update-button" onclick="createStock()">Create</button></td>
+                </tr>
+            </table>
+</div>
 
-<div class="container">
+<!--//stock table-->
+<div class="container" id="display">
 
   <h1>Stock</h1>
   <button  onclick="showCreate()">Create</button>
@@ -91,24 +115,15 @@
                 </tr>                
             </table>
 
-        <div id='createUpdateForm' style="display: none">
-                <h2><span id="createLabel">Create a</span> <span id="updateLabel">update</span> Book</h2>
-                <input type="hidden" name="id"/>
-                Title <input type="text" name="Title" /><br/>
-                Author <input type="text" name="Author"/> <br/>
-                Price <input type="number" name="Price"/> <br/>
-                <span><button id="doCreateButton" onclick="doCreate()">Create</button></span>
-                <span><button id="doUpdateButton" onclick="doUpdate()">Update</button></span>
-        </div>
 
 
 </div>
 
 
-
-</div>     
+  
 
 <script>
+// turn on and off show create table
   function showCreate(){
     document.getElementById('display').style.display ="none"
     document.getElementById('create-update').style.display = "block"
@@ -117,9 +132,41 @@
     document.getElementById('display').style.display="block"
     document.getElementById('create-update').style.display="none"
   }
-  function doCreate(){
-                showDisplay()
+
+// do something here
+  function createStock(stock){
+    console.log("in doCreate")
+    stock = getStockFromForm()
+   $.ajax({
+      url:'/stock',
+      method:'POST',
+      data: stock,
+      dataType:'JSON',
+      success:function(results){
+        console.log(results)
+        addStockToTable(stock)
+        showDisplay()
+      },
+      error:function(xhr,status,error){
+          console.log ("error"+error+"code:"+status)
+      }
+    })
+
+  
             }
+
+  function getStockFromForm(){
+    var form = document.getElementById('createUpdateForm')
+    var stock = {}
+    stock.name = form.querySelector('input[name="Item"]').value
+    stock.description = form.querySelector('input[name="Description"]').value
+    stock.price = form.querySelector('input[name="Price"]').value
+    console.log(JSON.stringify(stock))
+    return stock 
+
+            }
+
+//ajax to populate table
   function populateTable(){
       $.ajax({
       url: 'http://127.0.0.1:5000/stock',
@@ -136,7 +183,7 @@
       })
   }
 
-
+// add stock to to columns
   function addStockToTable(stock){
       tableElem = document.getElementById('stockTable')
       rowElem = tableElem.insertRow(-1)
