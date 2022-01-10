@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Index</title>
+        <title>Members</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -23,6 +23,7 @@
   </head>
 
     <body>
+        <!--//navbar-->
         <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
@@ -56,7 +57,7 @@
         </div>
 
 
-
+<!--//jumbotron-->
 <div class="container">  
   
     <div class="jumbotron">
@@ -73,13 +74,49 @@
 
 </div>  
 
+<!--//link to on update table-->
+<div class ="container" id="create-update" style="display:none">
+  <h2>create-update</h2>
+            <table id ="createUpdateForm">
+              <tr>
+                <td>ID</td>
+                <td><input type="text" name="ID" id="displayId"></td>
+            </tr>
+                <tr>
+                    <td>Name</td>
+                    <td><input type="text" name="Name"></td>
+                </tr>
+                <tr>
+                    <td>Age</td>
+                    <td><input type="text" name="Age"></td>     
+                </tr>
+                <tr>           
+                    <td>Email</td>
+                    <td><input type="text" name="Email"></td> 
+                </tr>
+                <tr>           
+                  <td>Gender</td>
+                  <td><input type="text" name="Gender"></td> 
+              </tr>
+              <tr>           
+                <td>Location</td>
+                <td><input type="text" name="Location"></td> 
+            </tr>
+                
+                <tr>
+                    <td></td><td><button id="create-button" onclick="createMem()">Create</button></td>
+                    <td></td><td><button id="update-button" onclick="updateMem()">Update</button></td>
+                </tr>
+            </table>
+</div>
 
-<div class="container">
+<!--//Members table-->
+<div class="container" id="display">
 
   <h1>Members</h1>
-        <div> <button id="showCreateButton" onclick="showCreate()">Create</button></div>
-        <div>
-            <table class="table" id="membersTable">
+  <button  onclick="showCreate()">Create</button>
+
+            <table class="table" id="memberTable">
                 <tr>
                         <th>ID</th>
                         <th>Name</th>
@@ -87,30 +124,244 @@
                         <th>Email</th>
                         <th>Gender</th>
                         <th>Location</th>
+                        
                 </tr>                
             </table>
-        </div>
-        <div id='createUpdateForm' style="display: none">
-                <h2><span id="createLabel">Create a</span> <span id="updateLabel">update</span> Book</h2>
-                <input type="hidden" name="id"/>
-                Title <input type="text" name="Title" /><br/>
-                Author <input type="text" name="Author"/> <br/>
-                Price <input type="number" name="Price"/> <br/>
-                <span><button id="doCreateButton" onclick="doCreate()">Create</button></span>
-                <span><button id="doUpdateButton" onclick="doUpdate()">Update</button></span>
-        </div>
+
 
 
 </div>
 
 
+  
+
+<script>
+
+// turn on and off show create table
+  function showCreate(){
+    document.getElementById('display').style.display ="none"
+    document.getElementById('update-button').style.display ="none"
+    document.getElementById('create-button').style.display = "block"
+    document.getElementById('create-update').style.display = "block"
+    document.getElementById('displayId').style.display = "none"
+  }
+
+  function showUpdate(r){
+    var rowElement = r.parentNode.parentNode;
+    members = readMembersFromRow(rowElement)
+    populateForm(members)
+    document.getElementById('display').style.display ="none"
+    document.getElementById('update-button').style.display ="block"
+    document.getElementById('create-button').style.display = "none"
+    document.getElementById('create-update').style.display = "block"
+  }
+
+  function readMembersFromRow(rowElement){
+    members = {}
+    members.memberId = rowElement.getAttribute("id");
+    members.name = rowElement.cells[1].firstChild.textContent
+    members.age = rowElement.cells[2].firstChild.textContent
+    members.email = rowElement.cells[3].firstChild.textContent
+    members.gender = rowElement.cells[4].firstChild.textContent
+    members.locId = rowElement.cells[5].firstChild.textContent
+    
+
+    return members
+  }
+  
+
+  function populateForm(members){
+    var form = document.getElementById('createUpdateForm')
+
+    form.querySelector('input[name="ID"]').value = members.memberId
+    form.querySelector('input[name="ID"]').disabled = true
+    form.querySelector('input[name="Name"]').value = members.name
+    form.querySelector('input[name="Age"]').value = members.age
+    form.querySelector('input[name="Email"]').value = members.email
+    form.querySelector('input[name="Gender"]').value = members.gender
+    form.querySelector('input[name="Location"]').value = members.locId
+
+  
+
+  }
 
 
-     
+  function clearForm(){
+    var form = document.getElementById('createUpdateForm')
 
-</div>     
+    form.querySelector('input[name="ID"]').value = ""
+    form.querySelector('input[name="ID"]').disabled = false
+    form.querySelector('input[name="Name"]').value = ""
+    form.querySelector('input[name="Age"]').value = ""
+    form.querySelector('input[name="Email"]').value = ""
+    form.querySelector('input[name="Gender"]').value = ""
+    form.querySelector('input[name="Location"]').value = ""
+
+  
+
+  }
 
 
+  function showDisplay(){
+    document.getElementById('display').style.display="block"
+    document.getElementById('create-update').style.display="none"
+  }
+
+// do something here
+  function createMem(members){
+    console.log("in createMem")
+    members = getMemberFromForm()
+   $.ajax({
+      url:'/members',
+      method:'POST',
+      data: JSON.stringify(members),
+      dataType:'JSON',
+      contentType: "application/json; charset=utf-8",
+      success:function(result){
+        console.log(result)
+        addMemberToTable(members)
+        showDisplay()
+        clearForm()
+      },
+      error:function(xhr,status,error){
+          console.log ("error"+error+"code:"+status)
+      }
+    })
+
+  
+            }
+  
+  function updateMem(){
+    members = getMemberFromUpdate()
+    updateServer(members)
+    
+  }
+  function updateServer(members){
+    $.ajax({
+      url:'/members/'+members.memberId,
+      data: JSON.stringify(members), 
+      method:"PUT",
+      dataType: "JSON",
+      contentType: "application/json; charset=utf-8",
+      success: function(result){
+        console.log(result)
+        updateTableRow(members)
+        showDisplay()
+        clearForm()
+      },
+      error: function(xhr, status, error){
+        console.log("error"+error)
+
+      }
+
+    })
+  }
+
+function updateTableRow(members){
+  rowElement= document.getElementById(members.memberId)
+  rowElement.cells[1].firstChild.textContent = members.name
+  rowElement.cells[2].firstChild.textContent = members.age
+  rowElement.cells[3].firstChild.textContent = members.email
+  rowElement.cells[4].firstChild.textContent = members.gender
+  rowElement.cells[5].firstChild.textContent = members.locId
+
+
+}
+
+
+  function deleteMem(r){
+    var tableElement = document.getElementById('memberTable');
+    var rowElement = r.parentNode.parentNode;
+    var index = rowElement.rowIndex;
+    ID = rowElement.getAttribute("id");
+    $.ajax({
+      url:"/members/"+ID,
+      method: "DELETE",      
+      datatype: "JSON",       
+      success: function(result){
+        tableElement.deleteRow(index);
+      },
+      error:function(xhr,status,error){
+          console.log (error)
+      }
+    
+  })
+}
+
+
+function getMemberFromUpdate(){
+    var form = document.getElementById('createUpdateForm')
+    var members = {}
+    members.memberId = form.querySelector('input[name="ID"]').value
+    members.name = form.querySelector('input[name="Name"]').value
+    members.age = form.querySelector('input[name="Age"]').value
+    members.email = form.querySelector('input[name="Email"]').value
+    members.gender = form.querySelector('input[name="Gender"]').value
+    members.locId = form.querySelector('input[name="Location"]').value
+    console.log(JSON.stringify(members))
+    return members 
+
+            }
+
+  function getMemberFromForm(){
+    var form = document.getElementById('createUpdateForm')
+    var members = {}
+    
+    members.name = form.querySelector('input[name="Name"]').value
+    members.age = form.querySelector('input[name="Age"]').value
+    members.email = form.querySelector('input[name="Email"]').value
+    members.gender = form.querySelector('input[name="Gender"]').value
+    members.locId = form.querySelector('input[name="Location"]').value
+
+    console.log(JSON.stringify(members))
+    return members 
+
+            }
+
+//ajax to populate table
+  function populateTable(){
+      $.ajax({
+      url: 'http://127.0.0.1:5000/members',
+      method: "GET",
+      dataType: "JSON",
+      success: function (result) {
+          for(members of result){
+              addMemberToTable(members)
+          }
+      },
+      error:function(xhr,status,error){
+          console.log ("error"+error+"code:"+status)
+      }
+      })
+  }
+
+// add stock to to columns
+  function addMemberToTable(members){
+      tableElem = document.getElementById('memberTable')
+      rowElem = tableElem.insertRow(-1)
+      rowElem.setAttribute("id", members.memberId)
+      cell1=rowElem.insertCell(0)                
+      cell1.innerHTML=members.memberId
+      cell2=rowElem.insertCell(1)                
+      cell2.innerHTML=members.name
+      cell3=rowElem.insertCell(2)                
+      cell3.innerHTML=members.age            
+      cell4=rowElem.insertCell(3)                
+      cell4.innerHTML=members.email
+      cell1=rowElem.insertCell(4)                
+      cell1.innerHTML=members.gender
+      cell1=rowElem.insertCell(5)                
+      cell1.innerHTML=members.locId
+      cell5=rowElem.insertCell(6)                      
+      cell5.innerHTML='<button onclick="showUpdate(this)">Update</button>'
+      cell6=rowElem.insertCell(7)                
+      cell6.innerHTML='<button onclick="deleteMem(this)">Delete</button>'
+  }
+  populateTable()
+
+
+
+</script>
 
 </body>
 </html>

@@ -172,6 +172,21 @@
 
   }
 
+
+  function clearForm(){
+    var form = document.getElementById('createUpdateForm')
+
+    form.querySelector('input[name="ID"]').value = ""
+    form.querySelector('input[name="ID"]').disabled = false
+    form.querySelector('input[name="Item"]').value = ""
+    form.querySelector('input[name="Description"]').value = ""
+    form.querySelector('input[name="Price"]').value = ""
+
+  
+
+  }
+
+
   function showDisplay(){
     document.getElementById('display').style.display="block"
     document.getElementById('create-update').style.display="none"
@@ -191,6 +206,7 @@
         console.log(result)
         addStockToTable(stock)
         showDisplay()
+        clearForm()
       },
       error:function(xhr,status,error){
           console.log ("error"+error+"code:"+status)
@@ -201,7 +217,7 @@
             }
   
   function updateStock(){
-    stock = getStockFromForm()
+    stock = getStockFromUpdate()
     updateServer(stock)
     
   }
@@ -216,6 +232,7 @@
         console.log(result)
         updateTableRow(stock)
         showDisplay()
+        clearForm()
       },
       error: function(xhr, status, error){
         console.log("error"+error)
@@ -226,7 +243,11 @@
   }
 
 function updateTableRow(stock){
-  console.log("updating table")
+  rowElement= document.getElementById(stock.stockId)
+  rowElement.cells[1].firstChild.textContent = stock.name
+  rowElement.cells[2].firstChild.textContent = stock.description
+  rowElement.cells[3].firstChild.textContent = stock.price
+
 }
 
 
@@ -250,7 +271,17 @@ function updateTableRow(stock){
 }
 
 
+function getStockFromUpdate(){
+    var form = document.getElementById('createUpdateForm')
+    var stock = {}
+    stock.stockId = form.querySelector('input[name="ID"]').value
+    stock.name = form.querySelector('input[name="Item"]').value
+    stock.description = form.querySelector('input[name="Description"]').value
+    stock.price = form.querySelector('input[name="Price"]').value
+    console.log(JSON.stringify(stock))
+    return stock 
 
+            }
 
   function getStockFromForm(){
     var form = document.getElementById('createUpdateForm')

@@ -4,6 +4,7 @@ from sportsclubDAO import sportsclubDao
 app = Flask(__name__, static_url_path='', static_folder='staticpages')
 
 
+
 @app.route("/")
 def index():      
     
