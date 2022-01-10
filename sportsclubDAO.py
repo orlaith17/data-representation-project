@@ -99,7 +99,7 @@ class sportsclubDao:
       cursor = self.db.cursor()
       sql = "insert into admin (name, password) values (%s, %s)"
       values = [
-         # dept['deptID'], - auto-increment
+         # admin['adminId'], - auto-increment
          admin['name'],    
          admin['password']       
       ]
@@ -111,7 +111,7 @@ class sportsclubDao:
       cursor = self.db.cursor()
       sql = "insert into stock (name, description, price) values (%s, %s, %s)"
       values = [
-         # dept['deptID'], - auto-increment
+         # stock['stockId'], - auto-increment
          stock['name'],    
          stock['description'],   
          stock['price']      

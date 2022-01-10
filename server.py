@@ -90,6 +90,9 @@ def createAdmin():
    app.logger.info('Created admin %s', admin)
    return jsonify(sportsclubDao.createAdmin(admin))
 
+
+# curl  -i -H "Content-Type:application/json" -X POST -d "{\"name\":\"hello\",\"description\":\"someone\",\"price\":20}" http://127.0.0.1:5000/stock
+
 @app.route('/stock', methods=['POST'])
 def createStock(): 
    stock = {
