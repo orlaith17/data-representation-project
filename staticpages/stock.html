@@ -123,6 +123,7 @@
   
 
 <script>
+
 // turn on and off show create table
   function showCreate(){
     document.getElementById('display').style.display ="none"
@@ -135,7 +136,7 @@
 
 // do something here
   function createStock(stock){
-    console.log("in doCreate")
+    console.log("in createStock")
     stock = getStockFromForm()
    $.ajax({
       url:'/stock',
@@ -156,7 +157,25 @@
   
             }
 
-  
+  function deleteStock(r){
+    var tableElement = document.getElementById('stockTable');
+    var rowElement = r.parentNode.parentNode;
+    var index = rowElement.rowIndex;
+    ID = rowElement.getAttribute("id");
+    $.ajax({
+      url:"/stock/"+ID,
+      method: "DELETE",      
+      datatype: "JSON",       
+      success: function(result){
+        tableElement.deleteRow(index);
+      },
+      error:function(xhr,status,error){
+          console.log (error)
+      }
+    
+  })
+}
+
 
 
 
@@ -204,7 +223,7 @@
       cell5=rowElem.insertCell(4)                
       cell5.innerHTML='<button onclick="showUpdate(this)">Update</button>'
       cell6=rowElem.insertCell(5)                
-      cell6.innerHTML='<button onclick="deletes(this)">Delete</button>'
+      cell6.innerHTML='<button onclick="deleteStock(this)">Delete</button>'
   }
   populateTable()
 
