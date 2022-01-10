@@ -1,4 +1,5 @@
 import mysql.connector
+import dbconfig as cfg
 
 # Class object for Database Access Object (DAO)
 class sportsclubDao:
@@ -6,10 +7,10 @@ class sportsclubDao:
 
    def __init__(self):
       self.db = mysql.connector.connect(
-          host='localhost',
-          user='root',
-          password='',
-          database='sportsclub',
+          host=cfg.mysql['host'],
+          user=cfg.mysql['user'],
+          password=cfg.mysql['password'],
+          database=cfg.mysql['database']
       )
 
    def getAllLoc(self):      
