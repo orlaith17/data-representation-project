@@ -77,6 +77,8 @@ def createMem():
    mem = {
       "name": request.json["name"],
       "age": request.json["age"],
+
+      "gender":request.json["gender"],
       "locId": request.json["locId"]
    }
    app.logger.info('Created member %s', mem)
@@ -142,6 +144,7 @@ def updateMem(memberId):
       currentMem['name'] = request.json['name']
    if 'age' in request.json:
       currentMem['age'] = request.json['age']
+
    if 'gender' in request.json:
       currentMem['gender'] = request.json['gender']
    if 'locId' in request.json:  
@@ -151,7 +154,7 @@ def updateMem(memberId):
          app.logger.info('Location %s not found', locId)
          return jsonify({}), 404
       currentMem['locId'] = locId       
-   values = (currentMem['name'],currentMem['age'] ,currentMem['gender'] , currentMem['locId'])
+   values = (currentMem['name'],currentMem['age'] , currentMem['gender'] , currentMem['locId'])
    sportsclubDao.updateMem(currentMem)
    app.logger.info('Updated member %s', currentMem)
    return jsonify(currentMem)

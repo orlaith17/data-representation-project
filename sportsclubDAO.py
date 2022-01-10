@@ -84,11 +84,12 @@ class sportsclubDao:
 
    def createMem(self, mem):
       cursor = self.db.cursor()
-      sql = "insert into members (name, age, locId) values (%s, %s, %s)"
+      sql = "insert into members (name, age, gender, locId) values (%s, %s, %s, %s)"
       values = [
          # dept['deptID'], - auto-increment
          mem['name'],    
          mem['age'], 
+         mem['gender'],  
          mem['locId']    
       ]
       cursor.execute(sql, values)
@@ -119,7 +120,6 @@ class sportsclubDao:
       cursor.execute(sql, values)
       self.db.commit()
       return cursor.lastrowid
-
 
 
 
@@ -316,7 +316,7 @@ class sportsclubDao:
 
    # Function to convert employee into Dictionary/JSON
    def convertMemToDict(self, result):
-      colnames = ['memberId', 'name', 'age', 'email', 'gender', 'locId']
+      colnames = ['memberId', 'name', 'age', 'gender', 'locId']
       mem = {}
       if result:
          for i, colName in enumerate(colnames):

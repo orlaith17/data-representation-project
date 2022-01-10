@@ -90,10 +90,7 @@
                     <td>Age</td>
                     <td><input type="text" name="Age"></td>     
                 </tr>
-                <tr>           
-                    <td>Email</td>
-                    <td><input type="text" name="Email"></td> 
-                </tr>
+
                 <tr>           
                   <td>Gender</td>
                   <td><input type="text" name="Gender"></td> 
@@ -121,7 +118,7 @@
                         <th>ID</th>
                         <th>Name</th>
                         <th>Age</th>
-                        <th>Email</th>
+            
                         <th>Gender</th>
                         <th>Location</th>
                         
@@ -161,9 +158,9 @@
     members.memberId = rowElement.getAttribute("id");
     members.name = rowElement.cells[1].firstChild.textContent
     members.age = rowElement.cells[2].firstChild.textContent
-    members.email = rowElement.cells[3].firstChild.textContent
-    members.gender = rowElement.cells[4].firstChild.textContent
-    members.locId = rowElement.cells[5].firstChild.textContent
+  
+    members.gender = rowElement.cells[3].firstChild.textContent
+    members.locId = rowElement.cells[4].firstChild.textContent
     
 
     return members
@@ -177,7 +174,7 @@
     form.querySelector('input[name="ID"]').disabled = true
     form.querySelector('input[name="Name"]').value = members.name
     form.querySelector('input[name="Age"]').value = members.age
-    form.querySelector('input[name="Email"]').value = members.email
+
     form.querySelector('input[name="Gender"]').value = members.gender
     form.querySelector('input[name="Location"]').value = members.locId
 
@@ -193,7 +190,7 @@
     form.querySelector('input[name="ID"]').disabled = false
     form.querySelector('input[name="Name"]').value = ""
     form.querySelector('input[name="Age"]').value = ""
-    form.querySelector('input[name="Email"]').value = ""
+   
     form.querySelector('input[name="Gender"]').value = ""
     form.querySelector('input[name="Location"]').value = ""
 
@@ -261,9 +258,9 @@ function updateTableRow(members){
   rowElement= document.getElementById(members.memberId)
   rowElement.cells[1].firstChild.textContent = members.name
   rowElement.cells[2].firstChild.textContent = members.age
-  rowElement.cells[3].firstChild.textContent = members.email
-  rowElement.cells[4].firstChild.textContent = members.gender
-  rowElement.cells[5].firstChild.textContent = members.locId
+
+  rowElement.cells[3].firstChild.textContent = members.gender
+  rowElement.cells[4].firstChild.textContent = members.locId
 
 
 }
@@ -295,7 +292,7 @@ function getMemberFromUpdate(){
     members.memberId = form.querySelector('input[name="ID"]').value
     members.name = form.querySelector('input[name="Name"]').value
     members.age = form.querySelector('input[name="Age"]').value
-    members.email = form.querySelector('input[name="Email"]').value
+
     members.gender = form.querySelector('input[name="Gender"]').value
     members.locId = form.querySelector('input[name="Location"]').value
     console.log(JSON.stringify(members))
@@ -309,7 +306,7 @@ function getMemberFromUpdate(){
     
     members.name = form.querySelector('input[name="Name"]').value
     members.age = form.querySelector('input[name="Age"]').value
-    members.email = form.querySelector('input[name="Email"]').value
+
     members.gender = form.querySelector('input[name="Gender"]').value
     members.locId = form.querySelector('input[name="Location"]').value
 
@@ -346,16 +343,15 @@ function getMemberFromUpdate(){
       cell2.innerHTML=members.name
       cell3=rowElem.insertCell(2)                
       cell3.innerHTML=members.age            
+
       cell4=rowElem.insertCell(3)                
-      cell4.innerHTML=members.email
-      cell1=rowElem.insertCell(4)                
-      cell1.innerHTML=members.gender
-      cell1=rowElem.insertCell(5)                
-      cell1.innerHTML=members.locId
-      cell5=rowElem.insertCell(6)                      
-      cell5.innerHTML='<button onclick="showUpdate(this)">Update</button>'
-      cell6=rowElem.insertCell(7)                
-      cell6.innerHTML='<button onclick="deleteMem(this)">Delete</button>'
+      cell4.innerHTML=members.gender
+      cell5=rowElem.insertCell(4)                
+      cell5.innerHTML=members.locId
+      cell6=rowElem.insertCell(5)                      
+      cell6.innerHTML='<button onclick="showUpdate(this)">Update</button>'
+      cell7=rowElem.insertCell(6)                
+      cell7.innerHTML='<button onclick="deleteMem(this)">Delete</button>'
   }
   populateTable()
 
