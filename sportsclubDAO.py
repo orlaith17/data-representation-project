@@ -1,10 +1,14 @@
+# import the mysql connector module
 import mysql.connector
+# import the dbconfig.py file which contains my credentials to log into mysql
 import dbconfig as cfg
 
 # Class object for Database Access Object (DAO)
 class sportsclubDao:
    db=""
 
+   # function to connect to the database, 
+   # initial connection to the database when a new instance of the class is created
    def __init__(self):
       self.db = mysql.connector.connect(
           host=cfg.mysql['host'],
@@ -13,6 +17,7 @@ class sportsclubDao:
           database=cfg.mysql['database']
       )
 
+   # function to retrieve all locations from the location table in the database
    def getAllLoc(self):      
       cursor = self.db.cursor()
       sql = 'select * from location'
@@ -24,7 +29,7 @@ class sportsclubDao:
          returnArray.append(resultAsDict)
       return returnArray
 
-
+   # function to retrieve all members from the members table in the database
    def getAllMem(self):      
       cursor = self.db.cursor()
       sql = 'select * from members'
@@ -36,6 +41,7 @@ class sportsclubDao:
          returnArray.append(resultAsDict)
       return returnArray
 
+   # function to retrieve all stock from the stock table in the database
    def getAllStock(self):      
       cursor = self.db.cursor()
       sql = 'select * from stock'
@@ -47,7 +53,7 @@ class sportsclubDao:
          returnArray.append(resultAsDict)
       return returnArray
 
-
+   # function to retrieve all admins from the admin table in the database
    def getAllAdmin(self):      
       cursor = self.db.cursor()
       sql = 'select * from admin'
@@ -70,24 +76,24 @@ class sportsclubDao:
 
 
 
-
-   # Create department, returns deptID of new department
+   # function to create new location in the location database table
    def createLoc(self, location):
       cursor = self.db.cursor()
       sql = "insert into location (location) values (%s)"
       values = [
-         # dept['deptID'], - auto-increment
+         # location['locId'], - auto-increment
          location['location'],         
       ]
       cursor.execute(sql, values)
       self.db.commit()
       return cursor.lastrowid
 
+   # function to create new members in the members database table
    def createMem(self, mem):
       cursor = self.db.cursor()
       sql = "insert into members (name, age, gender, locId) values (%s, %s, %s, %s)"
       values = [
-         # dept['deptID'], - auto-increment
+         # mem['memberId'], - auto-increment
          mem['name'],    
          mem['age'], 
          mem['gender'],  
@@ -97,6 +103,7 @@ class sportsclubDao:
       self.db.commit()
       return cursor.lastrowid
 
+   # function to create new admin in the admin database table
    def createAdmin(self, admin):
       cursor = self.db.cursor()
       sql = "insert into admin (name, password) values (%s, %s)"
@@ -109,6 +116,7 @@ class sportsclubDao:
       self.db.commit()
       return cursor.lastrowid
 
+   # function to create new stock in the stock database table
    def createStock(self, stock):
       cursor = self.db.cursor()
       sql = "insert into stock (name, description, price) values (%s, %s, %s)"
@@ -130,24 +138,7 @@ class sportsclubDao:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+   # function to find location by id
    def findByLocId(self, locId):
       cursor = self.db.cursor()
       sql = "select * from location where locId = %s"      
@@ -157,7 +148,7 @@ class sportsclubDao:
       l = self.convertLocToDict(results)     
       return l
 
-
+   # function to find all members by location id
    def getAllMemByLoc(self, locId):
       cursor = self.db.cursor()
       sql = 'select * from members where locId = %s;'
@@ -167,7 +158,7 @@ class sportsclubDao:
       m = self.convertMemToDict(results)     
       return m
 
-
+   # function to find member by id
    def findByMemId(self, memberId):
       cursor = self.db.cursor()
       sql = "select * from members where memberId = %s"      
@@ -177,7 +168,7 @@ class sportsclubDao:
       mm = self.convertMemToDict(results)     
       return mm
 
-
+   # function to find stock by id
    def findByStockId(self, stockId):
       cursor = self.db.cursor()
       sql = "select * from stock where stockId = %s"      
@@ -187,6 +178,7 @@ class sportsclubDao:
       s = self.convertStockToDict(results)     
       return s
 
+   # function to find admin by id
    def findByAdminId(self, adminId):
       cursor = self.db.cursor()
       sql = "select * from admin where adminId = %s"      
@@ -207,7 +199,7 @@ class sportsclubDao:
 
 
 
-
+   # function to update existing location in the db
    def updateLoc(self, location):
       cursor = self.db.cursor()
       sql = "update location set location = %s where locId = %s"
@@ -218,7 +210,7 @@ class sportsclubDao:
       cursor.execute(sql, values)
       self.db.commit()
 
-
+   # function to update existing member in the db
    def updateMem(self, mem):
       cursor = self.db.cursor()
       sql = "update members set name = %s, age = %s, gender = %s where memberId = %s"
@@ -230,7 +222,8 @@ class sportsclubDao:
       ]
       cursor.execute(sql, values)
       self.db.commit()
-      
+
+   # function to update existing stock in the db     
    def updateStock(self, stock):
       cursor = self.db.cursor()
       sql = "update stock set name = %s, description = %s, price = %s where stockId = %s"
@@ -243,6 +236,7 @@ class sportsclubDao:
       cursor.execute(sql, values)
       self.db.commit()
 
+   # function to update existing admin in the db
    def updateAdmin(self, admin):
       cursor = self.db.cursor()
       sql = "update admin set name = %s, password = %s where adminId = %s"
@@ -259,7 +253,7 @@ class sportsclubDao:
 
 
 
-
+   # function to delete existing location in the db
    def deleteLoc(self, locId):      
       cursor = self.db.cursor()
       sql = 'delete from location where locId = %s'
@@ -267,6 +261,7 @@ class sportsclubDao:
       cursor.execute(sql, values)
       self.db.commit()
 
+   # function to delete existing member in the db
    def deleteMem(self, memberId):      
       cursor = self.db.cursor()
       sql = 'delete from members where memberId = %s'
@@ -274,13 +269,15 @@ class sportsclubDao:
       cursor.execute(sql, values)
       self.db.commit()
 
+   # function to delete existing stock in the db
    def deleteStock(self, stockId):      
       cursor = self.db.cursor()
       sql = 'delete from stock where stockId = %s'
       values = [stockId]
       cursor.execute(sql, values)
       self.db.commit()
-  
+
+   # function to delete existing admin in the db 
    def deleteAdmin(self, adminId):      
       cursor = self.db.cursor()
       sql = 'delete from admin where adminId = %s'
@@ -296,16 +293,7 @@ class sportsclubDao:
 
 
 
-
-
-
-
-
-
-
-
-
-   # Function to convert department into Dictionary/JSON
+   # function that converts the location data from the database to JSON
    def convertLocToDict(self, result):
       colnames = ['locId', 'location']
       loc = {}
@@ -315,7 +303,7 @@ class sportsclubDao:
             loc[colName] = value
       return loc
 
-   # Function to convert employee into Dictionary/JSON
+   # function that converts the members data from the database to JSON
    def convertMemToDict(self, result):
       colnames = ['memberId', 'name', 'age', 'gender', 'locId']
       mem = {}
@@ -325,7 +313,7 @@ class sportsclubDao:
             mem[colName] = value
       return mem
 
-   # Function to convert user into Dictionary/JSON
+   # function that converts the stock data from the database to JSON
    def convertStockToDict(self, result):
       colnames = ['stockId', 'name', 'description', 'price']
       u = {}
@@ -335,7 +323,7 @@ class sportsclubDao:
             u[colName] = value
       return u
 
-   # Function to convert user into Dictionary/JSON
+   # function that converts the admin data from the database to JSON
    def convertAdminToDict(self, result):
       colnames = ['adminId', 'name', 'password']
       u = {}
@@ -353,11 +341,5 @@ class sportsclubDao:
 
 
 
-
-
-
-
-
-
-
+# new instance of the sportsclubDAO class called 
 sportsclubDao = sportsclubDao()

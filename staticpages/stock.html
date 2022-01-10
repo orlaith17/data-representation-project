@@ -1,318 +1,299 @@
 <!DOCTYPE html>
+<!--Author: OH for DR End of Year Project-->
 <html>
-    <head>
-        <title>Stock</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-       <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
-       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-       
-       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <head>
 
-       <style>
-       .jumbotron {
-         background-image: url("img/header.png");
-         background-size: auto 100%; 
-         background-position: right bottom;
-         background-repeat: no-repeat;
-        }
-        </style>
-    
-  
+    <title>Stock</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!--//background style to jumbotron under navbar-->
+    <style>
+    .jumbotron {
+      background-image: url("img/header.png");
+      background-size: auto 100%; 
+      background-position: right bottom;
+      background-repeat: no-repeat;
+    }
+     </style>
+
   </head>
 
-    <body>
-        <!--//navbar-->
-        <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-              
-              <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page"  href="index.html">Home</a>
-                  </li>
+  <body>
+    <!--//navbar-->
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">          
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
 
-                  <li class="nav-item">
-                    <a class="nav-link" href="members.html">Members</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="stock.html">Stock</a>
-                  </li>
-              
-                </ul>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page"  href="index.html">Home</a>
+              </li>
 
-                <ul class="navbar-nav ml-auto" >
+              <li class="nav-item">
+                <a class="nav-link" href="members.html">Members</a>
+              </li>
 
-               
-                  <li class="nav-item">
-                    <a class="nav-link" href="/admin">Login</a>
-                  </li>
+              <li class="nav-item">
+                <a class="nav-link" href="stock.html">Stock</a>
+              </li>    
 
-                </ul>
-              </div>
-            </div>
-          </nav>
+            </ul>
+
+            <ul class="navbar-nav ml-auto" >    
+                      
+              <li class="nav-item">
+                <a class="nav-link" href="/admin">Login</a>
+              </li>
+
+            </ul>
+
+          </div>
         </div>
+      </nav>
+    </div>
 
 
-<!--//jumbotron-->
-<div class="container">  
-  
-    <div class="jumbotron">
-			<div class="b" >
-				
-				</div>
+    <!--//jumbotron below navbar-->
+    <div class="container">  
+      <div class="jumbotron">
+        <div class="b" >          
+        </div>
+      </div>
+      <div class="container text-center">
+      </div>
+    </div>  
 
-  </div>
+    <!--//link to on update table-->
+    <div class ="container" id="create-update" style="display:none">
+      <h2>create-update</h2>
+      <table id ="createUpdateForm">
+        <tr>
+          <td>ID</td>
+          <td><input type="text" name="ID" id="displayId"></td>
+        </tr>
+        <tr>
+          <td>Item</td>
+          <td><input type="text" name="Item"></td>
+        </tr>
+        <tr>
+          <td>Description</td>
+          <td><input type="text" name="Description"></td>     
+        </tr>
+        <tr>           
+          <td>Price</td>
+          <td><input type="text" name="Price"></td> 
+        </tr>          
+        <tr>
+          <td></td><td><button id="create-button" onclick="createStock()">Create</button></td>
+          <td></td><td><button id="update-button" onclick="updateStock()">Update</button></td>
+        </tr>
+      </table>
+    </div>
 
-  <div class="container text-center">
+    <!--//stock table-->
+    <div class="container" id="display">
+      <h1>Stock</h1>
+      <button  onclick="showCreate()">Create</button>
 
-  </div>
-           
+      <table class="table" id="stockTable">
+        <tr>
+          <th>ID</th>
+          <th>Item</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Update</th>
+          <th>Delete</th>                
+        </tr>                
+      </table>
 
-</div>  
-
-<!--//link to on update table-->
-<div class ="container" id="create-update" style="display:none">
-  <h2>create-update</h2>
-            <table id ="createUpdateForm">
-              <tr>
-                <td>ID</td>
-                <td><input type="text" name="ID" id="displayId"></td>
-            </tr>
-                <tr>
-                    <td>Item</td>
-                    <td><input type="text" name="Item"></td>
-                </tr>
-                <tr>
-                    <td>Description</td>
-                    <td><input type="text" name="Description"></td>     
-                </tr>
-                <tr>           
-                    <td>Price</td>
-                    <td><input type="text" name="Price"></td> 
-                </tr>
-                
-                <tr>
-                    <td></td><td><button id="create-button" onclick="createStock()">Create</button></td>
-                    <td></td><td><button id="update-button" onclick="updateStock()">Update</button></td>
-                </tr>
-            </table>
-</div>
-
-<!--//stock table-->
-<div class="container" id="display">
-
-  <h1>Stock</h1>
-  <button  onclick="showCreate()">Create</button>
-
-            <table class="table" id="stockTable">
-                <tr>
-                        <th>ID</th>
-                        <th>Item</th>
-                        <th>Description</th>
-                        <th>Price</th>
-                        <th>Update</th>
-                        <th>Delete</th>
-                        
-                </tr>                
-            </table>
-
-
-
-</div>
-
-
+    </div>
   
 
-<script>
+  <script>
 
-// turn on and off show create table
-  function showCreate(){
-    document.getElementById('display').style.display ="none"
-    document.getElementById('update-button').style.display ="none"
-    document.getElementById('create-button').style.display = "block"
-    document.getElementById('create-update').style.display = "block"
-    document.getElementById('displayId').style.display = "none"
-  }
+    // turn on and off show create table
+    function showCreate(){
+      document.getElementById('display').style.display ="none"
+      document.getElementById('update-button').style.display ="none"
+      document.getElementById('create-button').style.display = "block"
+      document.getElementById('create-update').style.display = "block"
+      document.getElementById('displayId').style.display = "none"
+    }
 
-  function showUpdate(r){
-    var rowElement = r.parentNode.parentNode;
-    stock = readStockFromRow(rowElement)
-    populateForm(stock)
-    document.getElementById('display').style.display ="none"
-    document.getElementById('update-button').style.display ="block"
-    document.getElementById('create-button').style.display = "none"
-    document.getElementById('create-update').style.display = "block"
-  }
+    // turn on and off show update table
+    function showUpdate(r){
+      var rowElement = r.parentNode.parentNode;
+      stock = readStockFromRow(rowElement)
+      populateForm(stock)
+      document.getElementById('display').style.display ="none"
+      document.getElementById('update-button').style.display ="block"
+      document.getElementById('create-button').style.display = "none"
+      document.getElementById('create-update').style.display = "block"
+    }
 
-  function readStockFromRow(rowElement){
-    stock = {}
-    stock.stockId = rowElement.getAttribute("id");
-    stock.name = rowElement.cells[1].firstChild.textContent
-    stock.description = rowElement.cells[2].firstChild.textContent
-    stock.price = rowElement.cells[3].firstChild.textContent
-
-    return stock
-  }
-  
-
-  function populateForm(stock){
-    var form = document.getElementById('createUpdateForm')
-
-    form.querySelector('input[name="ID"]').value = stock.stockId 
-    form.querySelector('input[name="ID"]').disabled = true
-    form.querySelector('input[name="Item"]').value = stock.name
-    form.querySelector('input[name="Description"]').value = stock.description
-    form.querySelector('input[name="Price"]').value = stock.price
-
-  
-
-  }
-
-
-  function clearForm(){
-    var form = document.getElementById('createUpdateForm')
-
-    form.querySelector('input[name="ID"]').value = ""
-    form.querySelector('input[name="ID"]').disabled = false
-    form.querySelector('input[name="Item"]').value = ""
-    form.querySelector('input[name="Description"]').value = ""
-    form.querySelector('input[name="Price"]').value = ""
-
-  
-
-  }
-
-
-  function showDisplay(){
-    document.getElementById('display').style.display="block"
-    document.getElementById('create-update').style.display="none"
-  }
-
-// do something here
-  function createStock(stock){
-    console.log("in createStock")
-    stock = getStockFromForm()
-   $.ajax({
-      url:'/stock',
-      method:'POST',
-      data: JSON.stringify(stock),
-      dataType:'JSON',
-      contentType: "application/json; charset=utf-8",
-      success:function(result){
-        console.log(result)
-        addStockToTable(stock)
-        showDisplay()
-        clearForm()
-      },
-      error:function(xhr,status,error){
-          console.log ("error"+error+"code:"+status)
-      }
-    })
-
-  
-            }
-  
-  function updateStock(){
-    stock = getStockFromUpdate()
-    updateServer(stock)
+    // read stock from row
+    function readStockFromRow(rowElement){
+      stock = {}
+      stock.stockId = rowElement.getAttribute("id");
+      stock.name = rowElement.cells[1].firstChild.textContent
+      stock.description = rowElement.cells[2].firstChild.textContent
+      stock.price = rowElement.cells[3].firstChild.textContent
+      return stock
+    }
     
-  }
-  function updateServer(stock){
-    $.ajax({
-      url:'/stock/'+stock.stockId,
-      data: JSON.stringify(stock), 
-      method:"PUT",
-      dataType: "JSON",
-      contentType: "application/json; charset=utf-8",
-      success: function(result){
-        console.log(result)
-        updateTableRow(stock)
-        showDisplay()
-        clearForm()
-      },
-      error: function(xhr, status, error){
-        console.log("error"+error)
+    //populate stock of update
+    function populateForm(stock){
+      var form = document.getElementById('createUpdateForm')
+      form.querySelector('input[name="ID"]').value = stock.stockId 
+      form.querySelector('input[name="ID"]').disabled = true
+      form.querySelector('input[name="Item"]').value = stock.name
+      form.querySelector('input[name="Description"]').value = stock.description
+      form.querySelector('input[name="Price"]').value = stock.price
+    }
 
-      }
+    // clear update form 
+    function clearForm(){
+      var form = document.getElementById('createUpdateForm')
+      form.querySelector('input[name="ID"]').value = ""
+      form.querySelector('input[name="ID"]').disabled = false
+      form.querySelector('input[name="Item"]').value = ""
+      form.querySelector('input[name="Description"]').value = ""
+      form.querySelector('input[name="Price"]').value = ""
+    }
 
-    })
-  }
-
-function updateTableRow(stock){
-  rowElement= document.getElementById(stock.stockId)
-  rowElement.cells[1].firstChild.textContent = stock.name
-  rowElement.cells[2].firstChild.textContent = stock.description
-  rowElement.cells[3].firstChild.textContent = stock.price
-
-}
+    // show stock 
+    function showDisplay(){
+      document.getElementById('display').style.display="block"
+      document.getElementById('create-update').style.display="none"
+    }
 
 
-  function deleteStock(r){
-    var tableElement = document.getElementById('stockTable');
-    var rowElement = r.parentNode.parentNode;
-    var index = rowElement.rowIndex;
-    ID = rowElement.getAttribute("id");
-    $.ajax({
-      url:"/stock/"+ID,
-      method: "DELETE",      
-      datatype: "JSON",       
-      success: function(result){
-        tableElement.deleteRow(index);
-      },
-      error:function(xhr,status,error){
-          console.log (error)
-      }
-    
-  })
-}
-
-
-function getStockFromUpdate(){
-    var form = document.getElementById('createUpdateForm')
-    var stock = {}
-    stock.stockId = form.querySelector('input[name="ID"]').value
-    stock.name = form.querySelector('input[name="Item"]').value
-    stock.description = form.querySelector('input[name="Description"]').value
-    stock.price = form.querySelector('input[name="Price"]').value
-    console.log(JSON.stringify(stock))
-    return stock 
-
-            }
-
-  function getStockFromForm(){
-    var form = document.getElementById('createUpdateForm')
-    var stock = {}
-    stock.name = form.querySelector('input[name="Item"]').value
-    stock.description = form.querySelector('input[name="Description"]').value
-    stock.price = form.querySelector('input[name="Price"]').value
-    console.log(JSON.stringify(stock))
-    return stock 
-
-            }
-host = window.location.origin
-//ajax to populate table
-  function populateTable(){
+    // create stock from ajax function
+    function createStock(stock){
+      console.log("in createStock")
+      stock = getStockFromForm()
       $.ajax({
-      url: host+'/stock',
-      method: "GET",
-      dataType: "JSON",
-      success: function (result) {
-          for(stock of result){
-              addStockToTable(stock)
+          url:'/stock',
+          method:'POST',
+          data: JSON.stringify(stock),
+          dataType:'JSON',
+          contentType: "application/json; charset=utf-8",
+          success:function(result){
+            console.log(result)
+            addStockToTable(stock)
+            showDisplay()
+            clearForm()
+          },
+          error:function(xhr,status,error){
+              console.log ("error"+error+"code:"+status)
           }
-      },
-      error:function(xhr,status,error){
-          console.log ("error"+error+"code:"+status)
-      }
-      })
-  }
+      })  
+    }
 
-// add stock to to columns
-  function addStockToTable(stock){
+    // update server of updated stock  
+    function updateStock(){
+      stock = getStockFromUpdate()
+      updateServer(stock)    
+    }
+
+    // update server with inputs
+    function updateServer(stock){
+      $.ajax({
+        url:'/stock/'+stock.stockId,
+        data: JSON.stringify(stock), 
+        method:"PUT",
+        dataType: "JSON",
+        contentType: "application/json; charset=utf-8",
+        success: function(result){
+          console.log(result)
+          updateTableRow(stock)
+          showDisplay()
+          clearForm()
+        },
+        error: function(xhr, status, error){
+          console.log("error"+error)
+        }
+      })
+    }
+
+    // update table row which then updates server with updateServer function
+    function updateTableRow(stock){
+      rowElement= document.getElementById(stock.stockId)
+      rowElement.cells[1].firstChild.textContent = stock.name
+      rowElement.cells[2].firstChild.textContent = stock.description
+      rowElement.cells[3].firstChild.textContent = stock.price
+    }
+
+    // delete a row on table and then in database
+    function deleteStock(r){
+      var tableElement = document.getElementById('stockTable');
+      var rowElement = r.parentNode.parentNode;
+      var index = rowElement.rowIndex;
+      ID = rowElement.getAttribute("id");
+      $.ajax({
+        url:"/stock/"+ID,
+        method: "DELETE",      
+        datatype: "JSON",       
+        success: function(result){
+          tableElement.deleteRow(index);
+        },
+        error:function(xhr,status,error){
+            console.log (error)
+        }    
+      })
+    }
+
+    // inputs for stock update
+    function getStockFromUpdate(){
+      var form = document.getElementById('createUpdateForm')
+      var stock = {}
+      stock.stockId = form.querySelector('input[name="ID"]').value
+      stock.name = form.querySelector('input[name="Item"]').value
+      stock.description = form.querySelector('input[name="Description"]').value
+      stock.price = form.querySelector('input[name="Price"]').value
+      console.log(JSON.stringify(stock))
+      return stock 
+    }
+
+    // inputs for stock create
+    function getStockFromForm(){
+      var form = document.getElementById('createUpdateForm')
+      var stock = {}
+      stock.name = form.querySelector('input[name="Item"]').value
+      stock.description = form.querySelector('input[name="Description"]').value
+      stock.price = form.querySelector('input[name="Price"]').value
+      console.log(JSON.stringify(stock))
+      return stock 
+    }
+
+    // configure to local machine host
+    host = window.location.origin
+    //ajax to populate table
+    function populateTable(){
+      $.ajax({
+        url: host+'/stock',
+        method: "GET",
+        dataType: "JSON",
+        success: function (result) {
+            for(stock of result){
+                addStockToTable(stock)
+            }
+        },
+        error:function(xhr,status,error){
+            console.log ("error"+error+"code:"+status)
+        }
+      })
+    }
+
+
+    // add stock to to columns
+    function addStockToTable(stock){
       tableElem = document.getElementById('stockTable')
       rowElem = tableElem.insertRow(-1)
       rowElem.setAttribute("id", stock.stockId)
@@ -328,12 +309,12 @@ host = window.location.origin
       cell5.innerHTML='<button onclick="showUpdate(this)">Update</button>'
       cell6=rowElem.insertCell(5)                
       cell6.innerHTML='<button onclick="deleteStock(this)">Delete</button>'
-  }
-  populateTable()
+    }
+    populateTable()
 
 
 
-</script>
+  </script>
 
-</body>
+  </body>
 </html>
