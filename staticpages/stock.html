@@ -293,11 +293,11 @@ function getStockFromUpdate(){
     return stock 
 
             }
-
+host = window.location.origin
 //ajax to populate table
   function populateTable(){
       $.ajax({
-      url: 'http://127.0.0.1:5000/stock',
+      url: host+'/stock',
       method: "GET",
       dataType: "JSON",
       success: function (result) {
